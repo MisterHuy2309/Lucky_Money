@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tết Cho Công Chúa của Tú 2026</title>
+    <style>
+        :root {
+            --red-bg: #b71c1c;
+            --red-env: #d32f2f;
+            --gold: #ffeb3b;
+            --pink-love: #ff4d6d;
+            --env-width: 105px;
+            --env-height: 145px;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--red-bg);
+            font-family: 'Arial', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+            transition: background 1s ease;
+        }
+
+        .header {
+            width: 100%; padding: 50px 0; text-align: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
+            z-index: 100;
+        }
+
+        h1 {
+            color: var(--gold); font-size: 1.1rem; margin: 0;
+            text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* --- PHẦN LÌ XÌ --- */
+        #lixiSection { 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding-top: 0px;
+        }
+        .game-area {
+            position: relative; width: 100%; max-width: 320px;
+            height: 650px; margin-top: 20px;
+        }
+
+        .envelope-item {
+            position: absolute; width: var(--env-width); height: var(--env-height);
+            transition: all 0.4s cubic-bezier(0.45, 0.05, 0.55, 0.95); cursor: pointer;
+        }
+        .env-back { position: absolute; width: 100%; height: 100%; background: #9b0000; border-radius: 8px; z-index: 1; }
+        .money-card {
+            position: absolute; bottom: 5px; left: 5%; width: 90%; height: 140px;
+            z-index: 2; transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; justify-content: center; align-items: center;
+        }
+        .money-card img { width: 140px; height: auto; transform: rotate(-90deg); object-fit: contain; }
+        .envelope-front {
+            position: absolute; bottom: 0; width: 100%; height: 100%;
+            background: linear-gradient(145deg, var(--red-env), #9b0000);
+            border-radius: 8px; z-index: 3; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+        }
+        .luck-symbol { width: 45px; height: 45px; border: 2px solid var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--gold); font-size: 24px; font-weight: bold; }
+
+        .status-peek .money-card { transform: translateY(-42px); }
+        .status-hide .money-card { transform: translateY(0); }
+        .status-win .money-card { transform: translateY(-150px) scale(1.35); z-index: 1000 !important; }
+
+        .controls { 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 0 60px 0; 
+            z-index: 200;
+        }  
+        .btn-shuffle, .btn-next {
+            background: linear-gradient(to bottom, #ffeb3b, #fbc02d);
+            color: #8e0000; border: none; padding: 16px 45px;
+            font-size: 1.1rem; font-weight: bold; border-radius: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4); cursor: pointer; text-transform: uppercase;
+        }
+        .btn-next { display: none; background: linear-gradient(to bottom, #ff4d6d, #c9184a); color: white; margin-top: 20px; animation: pulse 1.5s infinite; }
+
+        #locSection { 
+            display: none; 
+            width: 100%; 
+            height: 100vh;
+            max-width: 400px; 
+            text-align: center; 
+            padding: 20px; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .loc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; width: 100%; }
+        .loc-card {
+            background: #ff4d6d; height: 120px; display: flex; justify-content: center; align-items: center;
+            border-radius: 15px; color: white; font-weight: bold; font-size: 2.5rem;
+            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3); cursor: pointer; border: 3px solid #ffb3c1;
+        }
+
+        #resultArea { 
+            display: none; 
+            animation: fadeIn 1s; 
+            padding: 20px; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        #resultArea p { 
+            font-size: 1.4rem; 
+            color: #ff4d6d; 
+            font-style: italic; 
+            line-height: 1.6; 
+            font-weight: bold; 
+            margin-bottom: 30px;
+        }
+
+        #finalMsg { 
+            display: none; 
+            position: fixed; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 85%; 
+            text-align: center; 
+            color: #ff4d6d; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            z-index: 3000; 
+            animation: slowShow 2s forwards; 
+        }
+
+        .btn-receive { background: #ff4d6d; color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+
+        .btn-back-home {
+            display: none; position: fixed; bottom: 30px; right: 30px;
+            background: #ff4d6d; color: white; border: none;
+            width: 50px; height: 50px; border-radius: 50%;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer;
+            z-index: 4000; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.5);
+            transition: 0.3s;
+        }
+
+        .heart { position: fixed; color: #ff4d6d; z-index: 2500; pointer-events: none; animation: floatUp 3s ease-out forwards; }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slowShow { from { opacity: 0; transform: translate(-50%, -40%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+    </style>
+</head>
+<body onclick="playBgMusic()"> 
+
+    <audio id="bgMusic" loop playsinline>
+        <source src="Ed Sheeran - Thinking out Loud (Lyrics).mp4" type="audio/mp4">
+    </audio>
+
+    <audio id="winSound" playsinline>
+        <source src="Winning Sound Effect.mp4" type="audio/mp4">
+    </audio>
+
+    <div id="lixiSection">
+        <div class="header"><h1>🧧 LÌ XÌ CHO NGỪI ĐẸP CỦA TÚ 🧧</h1></div>
+        <div class="game-area" id="gameArea"></div>
+        <div class="controls">
+            <button class="btn-shuffle" id="btnShuffle" onclick="startShuffle()">Bắt đầu trộn</button>
+            <button class="btn-next" id="btnNext" onclick="switchToLoc()">Bốc Lộc Tình Yêu ❤️</button>
+        </div>
+    </div>
+
+    <div id="locSection">
+        <h1 style="color: #ff4d6d; text-shadow: none; margin-bottom: 20px;">🌸 LỘC XUÂN TÌNH YÊU 🌸</h1>
+        <div class="loc-grid" id="locGrid"></div>
+        <div id="resultArea">
+            <p id="locText"></p>
+            <button class="btn-receive" onclick="showLoveFinal()">NHẬN LỘC ❤️</button>
+        </div>
+    </div>
+
+    <div id="finalMsg">
+        Cảm ơn em đã đến bên anh!<br>
+        Hy vọng 2 đứa mình sẽ luôn bên nhau nhiều hơn nhé! ❤️
+    </div>
+
+    <button class="btn-back-home" id="backHomeBtn" onclick="location.reload()">>></button>
+
+    <script>
+        const moneyImages = ["1k.jpg", "5k.jpg", "10k.jpg", "20k.jpg", "50k.jpg", "100k.jpg", "200k.jpg", "500k.jpg"];
+        const locPhrases = [
+            "Chúc em năm mới luôn xinh đẹp rạng ngời, nụ cười của em là niềm hạnh phúc của anh! 🌹",
+            "Năm mới chúc bé yêu mọi dự định đều thành công, luôn tự tin và tỏa sáng! ✨",
+            "Chúc công chúa luôn khỏe mạnh, ăn ngon không béo, ngủ ngon không muộn! 🍓",
+            "Lộc Tình Duyên: Chúc cho chúng mình năm nay sẽ có thêm nhiều chuyến đi cùng nhau! ✈️",
+            "Năm mới bớt lo âu em nhé. Cả thế giới cứ để anh lo, em chỉ việc vui vẻ thôi! ❤️",
+            "Lộc Bình An: Mong mọi điều tốt lành nhất sẽ đến với em. Anh sẽ luôn bảo vệ em! 🛡️",
+            "Chúc em năm mới túi tiền rủng rỉnh, vì đã có 'thẻ ATM' mang tên Anh! 💰",
+            "Lời chúc đặc biệt: Anh hứa sẽ yêu em và cưng chiều em hơn bất cứ ai trên đời! 💍"
+        ];
+
+        const area = document.getElementById('gameArea');
+        let musicStarted = false;
+
+        function playBgMusic() {
+            if (!musicStarted) {
+                const bg = document.getElementById('bgMusic');
+                bg.play().catch(e => console.log("Interaction required"));
+                musicStarted = true;
+            }
+        }
+        
+        function getStandardPos(index) {
+            const row = Math.floor(index / 2);
+            const col = index % 2;
+            const gapX = 45; const gapY = 90;
+            const startX = (area.clientWidth - (2 * 105 + gapX)) / 2;
+            return { x: startX + col * (105 + gapX), y: row * (110 + gapY) };
+        }
+
+        function init() {
+            area.innerHTML = '';
+            moneyImages.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'envelope-item status-peek';
+                const pos = getStandardPos(index);
+                item.style.left = pos.x + 'px'; item.style.top = pos.y + 'px';
+                item.innerHTML = `
+                    <div class="env-back"></div>
+                    <div class="money-card"><img src="${img}"></div>
+                    <div class="envelope-front"><div class="luck-symbol">福</div></div>
+                `;
+                area.appendChild(item);
+            });
+        }
+
+        async function startShuffle() {
+            document.getElementById('btnShuffle').style.display = 'none';
+            const items = document.querySelectorAll('.envelope-item');
+            items.forEach(item => item.classList.replace('status-peek', 'status-hide'));
+            await new Promise(r => setTimeout(r, 600));
+
+            let count = 0;
+            const interval = setInterval(() => {
+                items.forEach((item) => {
+                    item.style.left = Math.random() * (area.clientWidth - 105) + 'px';
+                    item.style.top = Math.random() * (area.clientHeight - 145) + 'px';
+                    item.style.transform = `rotate(${Math.random() * 720 - 360}deg) scale(${0.8 + Math.random() * 0.5})`;
+                    item.style.zIndex = Math.floor(Math.random() * 500);
+                });
+                if (++count >= 15) {
+                    clearInterval(interval);
+                    items.forEach((item, index) => {
+                        const pos = getStandardPos(index);
+                        item.style.left = pos.x + 'px'; item.style.top = pos.y + 'px';
+                        item.style.transform = 'rotate(0deg) scale(1)'; item.style.zIndex = '10';
+                        setTimeout(() => { item.onclick = function() { openLixi(this); }; }, 500);
+                    });
+                }
+            }, 200);
+        }
+
+        function openLixi(el) {
+            if (el.classList.contains('status-win')) return;
+
+            // Phát âm thanh
+            const winSfx = document.getElementById('winSound');
+            winSfx.currentTime = 0;
+            winSfx.play();
+
+            el.querySelector('img').src = "500k.jpg";
+            el.classList.replace('status-hide', 'status-win');
+
+            let otherPrizes = ["1k.jpg", "5k.jpg", "10k.jpg", "20k.jpg", "50k.jpg", "100k.jpg", "200k.jpg"];
+            otherPrizes.sort(() => Math.random() - 0.5);
+
+            let prizeIdx = 0;
+            document.querySelectorAll('.envelope-item').forEach(item => {
+                if (item !== el) { 
+                    item.querySelector('img').src = otherPrizes[prizeIdx++];
+                    item.classList.replace('status-hide', 'status-peek'); 
+                    item.onclick = null; 
+                }
+            });
+            setTimeout(() => { document.getElementById('btnNext').style.display = 'block'; }, 1000);
+        }
+
+        function switchToLoc() {
+            document.getElementById('lixiSection').style.display = 'none';
+            document.body.style.backgroundColor = '#fff0f3';
+            const sec = document.getElementById('locSection');
+            sec.style.display = 'flex'; 
+            const grid = document.getElementById('locGrid');
+            grid.innerHTML = '';
+            for(let i=1; i<=8; i++) {
+                const card = document.createElement('div');
+                card.className = 'loc-card';
+                card.innerText = i;
+                card.onclick = () => {
+                    grid.style.display = 'none';
+                    const res = document.getElementById('resultArea');
+                    res.style.display = 'flex'; 
+                    document.getElementById('locText').innerText = locPhrases[i-1];
+                };
+                grid.appendChild(card);
+            }
+        }
+
+        function showLoveFinal() {
+            document.getElementById('resultArea').style.display = 'none';
+            document.getElementById('locSection').style.display = 'none'; 
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const h = document.createElement('div');
+                    h.className = 'heart';
+                    h.innerHTML = '❤️';
+                    h.style.left = Math.random() * 100 + 'vw';
+                    h.style.bottom = '0';
+                    h.style.fontSize = Math.random() * 20 + 10 + 'px';
+                    document.body.appendChild(h);
+                }, i * 100);
+            }
+            setTimeout(() => { 
+                document.getElementById('finalMsg').style.display = 'block'; 
+                document.getElementById('backHomeBtn').style.display = 'block';
+            }, 1000);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
